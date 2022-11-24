@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config();
 
-const mongoClient = MongoClient(process.env.MONGO_URI)
+const mongoClient = new MongoClient(process.env.MONGO_URI)
 
 try {
     await mongoClient.connect()
@@ -12,7 +12,7 @@ try {
     console.log(err)
 }
 
-db = mongoClient.db('cavernaDB')
+const db = mongoClient.db('cavernaDB')
 
 export const usersCollection = db.collection('users')
 export const sessionsCollection = db.collection('sessions')
