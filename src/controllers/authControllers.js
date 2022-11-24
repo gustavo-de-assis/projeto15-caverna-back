@@ -14,6 +14,7 @@ export async function signUp(req, res) {
             return res.status(409).send("User already exists!");
         }
 
+        newUser.cart = [];
         const hashPassword = bcrypt.hashSync(newUser.password, 10);
         await usersCollection.insertOne({ ...newUser, password: hashPassword });
 
