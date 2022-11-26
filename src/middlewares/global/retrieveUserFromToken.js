@@ -1,10 +1,10 @@
 import { usersCollection, sessionsCollection } from "../../database/db.js";
 
 export async function retrieveUserFromToken(req, res, next) {
-    ```
+    /*
     This function receives the token as req.headers and returns the 
     user linked with the token's session if the session exists.
-    ```;
+    */;
 
     const { authorization } = req.headers;
     const token = authorization?.replace("Bearer ", "").trim();
@@ -27,5 +27,9 @@ export async function retrieveUserFromToken(req, res, next) {
         return res.sendStatus(502);
     }
 
+    delete user.password
+
     res.locals.user = user;
+
+    next()
 }
