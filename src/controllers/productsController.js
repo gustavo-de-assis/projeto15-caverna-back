@@ -9,9 +9,6 @@ export async function addProduct(req, res) {
 	const user = res.locals.user;
 	const product = res.locals.product;
 
-	console.log(user);
-	console.log(product);
-
 	user.cart.push(product)
 
 	// Add product to user cart (update usersCollection)
