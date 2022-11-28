@@ -22,22 +22,24 @@ export async function deleteItem(req, res) {
 
 export async function completePurchase(req, res) {
 	const user = res.locals.user;
-    const pay = 'pix'
+	const pay = "pix";
 
 	const purchaseItem = {
 		user: user.name,
 		email: user.email,
 		products: user.cart,
-        payMethod: pay
+		payMethod: pay,
 	};
-    console.log(purchaseItem)
 
-    try {
-        await purchasesCollection.insertOne(purchaseItem)
-    } catch (err) {
-        console.log(err)
-        return res.sendStatus(500)
-    }
+	user.cart = [];
+
+	try {
+		await purchasesCollection.insertOne(purchaseItem);
+		await usersCollection.updateOne({ _id: user._id }, { $set: user });
+	} catch (err) {
+		console.log(err);
+		return res.sendStatus(500);
+	}
 
 	res.sendStatus(200);
 }
